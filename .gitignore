@@ -1,0 +1,6 @@
+.claude/
+.playwright-mcp/
+CLAUDE.md
+multi_device_fixes.md
+__pycache__/
+*.pyc

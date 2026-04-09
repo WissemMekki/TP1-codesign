@@ -34,11 +34,11 @@ h_B = np.empty(N * N, dtype=np.float32); h_B.fill(BVAL)
 h_C = np.empty(N * N, dtype=np.float32)
 
 # Build kernels
-prg_nv = cl.Program(ctx_nv, open('C_elem_ij.cl').read()).build()
+prg_nv = cl.Program(ctx_nv, open('kernels/C_elem_ij.cl').read()).build()
 mmul_nv = prg_nv.mmul
 mmul_nv.set_scalar_arg_dtypes([np.int32, None, None, None])
 
-prg_in = cl.Program(ctx_in, open('C_optimized.cl').read()).build()
+prg_in = cl.Program(ctx_in, open('kernels/C_optimized.cl').read()).build()
 mmul_in = prg_in.mmul
 mmul_in.set_scalar_arg_dtypes([np.int32, None, None, None])
 

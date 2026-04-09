@@ -49,25 +49,25 @@ def run_kernel(context, queue, kernel_file, N, global_size, local_size):
 kernels = [
     {
         'name': 'Baseline Coalesced',
-        'file': 'C_elem_ji.cl',
+        'file': 'kernels/C_elem_ji.cl',
         'global_size': lambda N: (N, N),
         'local_size': (16, 16),
     },
     {
         'name': 'Tiled (TS=32)',
-        'file': 'C_tiled.cl',
+        'file': 'kernels/C_tiled.cl',
         'global_size': lambda N: (N, N),
         'local_size': (32, 32),
     },
     {
         'name': '1D Reg Blocking (WPT=8)',
-        'file': 'C_reg_blocking.cl',
+        'file': 'kernels/C_reg_blocking.cl',
         'global_size': lambda N: (N, N // 8),
         'local_size': (32, 4),
     },
     {
         'name': '2D Reg Blocking (best)',
-        'file': 'C_optimized.cl',
+        'file': 'kernels/C_optimized.cl',
         'global_size': lambda N: (N // 8, N // 8),
         'local_size': (8, 8),
     },

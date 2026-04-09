@@ -134,11 +134,11 @@ def find_optimal_split(R_in_start, nvidia_dev, intel_dev, h_A, h_B):
     queue_nv = cl.CommandQueue(ctx_nv, properties=cl.command_queue_properties.PROFILING_ENABLE)
     queue_in = cl.CommandQueue(ctx_in, properties=cl.command_queue_properties.PROFILING_ENABLE)
 
-    prg_nv = cl.Program(ctx_nv, open('C_elem_ij.cl').read()).build()
+    prg_nv = cl.Program(ctx_nv, open('kernels/C_elem_ij.cl').read()).build()
     mmul_nv = prg_nv.mmul
     mmul_nv.set_scalar_arg_dtypes([np.int32, None, None, None])
 
-    prg_in = cl.Program(ctx_in, open('C_optimized.cl').read()).build()
+    prg_in = cl.Program(ctx_in, open('kernels/C_optimized.cl').read()).build()
     mmul_in = prg_in.mmul
     mmul_in.set_scalar_arg_dtypes([np.int32, None, None, None])
 
@@ -207,11 +207,11 @@ def calibrate():
 
     # Solo benchmarks
     print(f"\nBenchmarking NVIDIA (uncoalesced, full {N}x{N})...")
-    P_nv = benchmark_device(nvidia_dev, 'C_elem_ij.cl', (N, N), (16, 16))
+    P_nv = benchmark_device(nvidia_dev, 'kernels/C_elem_ij.cl', (N, N), (16, 16))
     print(f"  {P_nv:.2f} GFLOPS")
 
     print(f"Benchmarking Intel iGPU (optimized, full {N}x{N})...")
-    P_in = benchmark_device(intel_dev, 'C_optimized.cl', (N // 8, N // 8), (8, 8))
+    P_in = benchmark_device(intel_dev, 'kernels/C_optimized.cl', (N // 8, N // 8), (8, 8))
     print(f"  {P_in:.2f} GFLOPS")
 
     # Theoretical split based on solo performance

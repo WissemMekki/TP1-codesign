@@ -4,3 +4,5 @@ CLAUDE.md
 multi_device_fixes.md
 __pycache__/
 *.pyc
+split_config.txt
+.gitignore
